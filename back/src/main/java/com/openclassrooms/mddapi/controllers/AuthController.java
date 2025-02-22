@@ -17,6 +17,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -55,7 +56,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "/register")
-    public @ResponseBody User register(@RequestBody RegisterRequest registerRequest){
+    public @ResponseBody User register(@Valid  @RequestBody RegisterRequest registerRequest){
         try {
             return userService.createUser(registerRequest);
         } catch (Exception e) {

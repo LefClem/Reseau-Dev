@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.payload.request;
 
+import com.openclassrooms.mddapi.validators.ValidPassword;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class RegisterRequest {
     private String email;
 
     @NotBlank
-    @Size(min = 8)
+    @ValidPassword
     private String password;
 
     @NotBlank

@@ -1,14 +1,21 @@
 package com.openclassrooms.mddapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "COMMENTARY")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Commentary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,20 +26,14 @@ public class Commentary {
 
     @CreatedDate
     @Column
-    private LocalDateTime created_at;
+    private Date created_at;
 
     @ManyToOne
-    @JoinTable(
-            name = "ARTICLES",
-            joinColumns = @JoinColumn(name = "post_id")
-    )
-    private Articles articles;
+    @JoinColumn(name = "article_id")
+    @JsonBackReference
+    private Articles article;
 
     @OneToOne
-    @JoinTable(
-            name = "USERS",
-            joinColumns = @JoinColumn(name = "author_id")
-    )
+    @JoinColumn(name = "user_id")
     private User user;
-
 }
