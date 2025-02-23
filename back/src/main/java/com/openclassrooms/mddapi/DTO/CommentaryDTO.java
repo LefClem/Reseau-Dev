@@ -5,14 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class CommentaryDTO {
     private Integer id;
-    private String username;
-    private String email;
+    private String content;
+    private UserDTO user;
 }

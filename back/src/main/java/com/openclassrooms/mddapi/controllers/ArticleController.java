@@ -1,9 +1,7 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.DTO.ArticleDTO;
-import com.openclassrooms.mddapi.DTO.ArticleListDTO;
 import com.openclassrooms.mddapi.models.Articles;
-import com.openclassrooms.mddapi.models.Subject;
 import com.openclassrooms.mddapi.payload.request.ArticleRequest;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.services.ArticleService;
@@ -30,12 +28,12 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/")
-    public ArticleListDTO getArticles(){
+    public List<ArticleDTO> getArticles(){
         return articleService.getArticlesList();
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<ArticleDTO> getArticleById(@PathVariable Integer id){
+    public ArticleDTO getArticleById(@PathVariable Integer id){
         return articleService.getArticle(id);
     }
 }

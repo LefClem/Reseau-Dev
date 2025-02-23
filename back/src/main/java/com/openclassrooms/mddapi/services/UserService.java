@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.DTO.UserDTO;
+import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -18,6 +19,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
@@ -54,22 +58,15 @@ public class UserService {
         }
     }
 
-    public Optional<UserDTO> getAuthUser(){
+    public UserDTO getAuthUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = (Jwt) authentication.getPrincipal();
-        Optional<User> user = userRepository.findByEmail(jwt.getSubject());
+        User user = userRepository.findByEmail(jwt.getSubject())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        ;
+        System.out.println(user);
 
-        return user.map(this::convertToDTO);
+        return userMapper.convertToDTO(user);
     }
 
-    public UserDTO convertToDTO (User user){
-        UserDTO dto = new UserDTO();
-
-        dto.setId(Math.toIntExact(user.getId()));
-        dto.setUsername(user.getUsername());
-        dto.setEmail(user.getEmail());
-        dto.setCreated_at(user.getCreated_at());
-
-        return dto;
-    }
 }

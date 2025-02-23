@@ -27,7 +27,7 @@ public class CommentaryService {
     @Autowired
     ArticleRepository articleRepository;
 
-    private Optional<UserDTO> getAuthenticatedUser(){
+    private UserDTO getAuthenticatedUser(){
         return userService.getAuthUser();
     }
 
@@ -35,7 +35,7 @@ public class CommentaryService {
         Articles article = articleRepository.findById(Long.valueOf(id))
                 .orElseThrow(() -> new RuntimeException("Article not found"));
 
-        User user = userRepository.findById(Long.valueOf(getAuthenticatedUser().get().getId()))
+        User user = userRepository.findById(Long.valueOf(getAuthenticatedUser().getId()))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Commentary n = Commentary.builder()

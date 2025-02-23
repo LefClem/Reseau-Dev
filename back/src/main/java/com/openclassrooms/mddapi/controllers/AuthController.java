@@ -39,7 +39,7 @@ public class AuthController {
     BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping(path = "/me")
-    public @ResponseBody ResponseEntity<Optional<UserDTO>> getUser(){
+    public @ResponseBody ResponseEntity<UserDTO> getUser(){
         return ResponseEntity.ok(userService.getAuthUser());
     }
 
@@ -49,9 +49,7 @@ public class AuthController {
             @RequestParam String email,
             @RequestParam String password
     ){
-        Optional<UserDTO> userOptional = userService.getAuthUser();
-        Integer id = userOptional.get().getId();
-
+        Integer id = userService.getAuthUser().getId();
         return userService.updateUser(username, email, password, id);
     }
 

@@ -20,4 +20,7 @@ public class Subject {
 
     @Column
     private String name;
+
+    @Column
+    private String description;
 }

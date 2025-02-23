@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.DTO;
 
 import com.openclassrooms.mddapi.models.Commentary;
 import com.openclassrooms.mddapi.models.Subject;
-import com.openclassrooms.mddapi.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +18,8 @@ public class ArticleDTO {
     private Integer id;
     private String title;
     private String content;
-    private User user;
+    private UserDTO user;
     private Subject subject;
     private Date created_at;
-    private List<Commentary> commentaries;
+    private List<CommentaryDTO> commentaries;
 }
