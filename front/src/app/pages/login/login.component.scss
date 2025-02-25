@@ -1,0 +1,39 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }  
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid #323232;
+}
+
+button {
+    color: #FFFFFF;
+    margin: 24px auto;
+    background-color: #7763C5;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+}
+
+nav {
+    border-bottom: 1px solid #323232;
+    img {
+        width: 200px;
+    }
+}
+
+img:last-child {
+    margin: 10px;
+    width: 39px;
+}

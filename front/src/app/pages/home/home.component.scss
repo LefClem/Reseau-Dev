@@ -5,3 +5,19 @@
   align-items: center;
   flex-direction: column;
 }
+
+.button-container {
+  display: flex;
+  gap: 48px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 36px;
+  }
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid #323232;
+  width: 150px;
+
+}
