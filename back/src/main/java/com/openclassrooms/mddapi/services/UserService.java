@@ -4,8 +4,10 @@ import com.openclassrooms.mddapi.DTO.UserDTO;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +28,11 @@ public class UserService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    public User createUser(RegisterRequest registerRequest){
+    public ResponseEntity<MessageResponse> createUser(RegisterRequest registerRequest){
+        if(userRepository.existsByEmail(registerRequest.getEmail())){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
+        }
+
         User n = User.builder()
                 .username(registerRequest.getUsername())
                 .email(registerRequest.getEmail())
@@ -34,7 +40,8 @@ public class UserService {
                 .created_at(new Date())
                 .build();
 
-        return userRepository.save(n);
+        userRepository.save(n);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
     public String updateUser(

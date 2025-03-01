@@ -1,0 +1,19 @@
+<div class="action-container">
+    <!-- {{ articles$ | async | json }} -->
+    <button>Créer un article</button>
+    <span>Trier par</span>
+</div>
+<div class="article-container">
+    <mat-card *ngFor="let article of (articles$ | async)" class="card" (click)="linkToDetail(article.id)">
+        <mat-card-header>
+            <h2>{{article.title}}</h2>
+            <div class="infos">
+                <mat-card-subtitle>{{article.created_at | date}}</mat-card-subtitle>
+                <mat-card-subtitle>{{article.user.username}}</mat-card-subtitle>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            Content: {{article.content}}
+        </mat-card-content>
+    </mat-card>
+</div>

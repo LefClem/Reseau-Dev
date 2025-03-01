@@ -2,9 +2,9 @@ package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.DTO.UserDTO;
 import com.openclassrooms.mddapi.DTO.TokenDTO;
-import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.services.JWTService;
 import com.openclassrooms.mddapi.services.UserService;
@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/auth")
@@ -54,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "/register")
-    public @ResponseBody User register(@Valid  @RequestBody RegisterRequest registerRequest){
+    public @ResponseBody ResponseEntity<MessageResponse> register(@Valid  @RequestBody RegisterRequest registerRequest){
         try {
             return userService.createUser(registerRequest);
         } catch (Exception e) {
