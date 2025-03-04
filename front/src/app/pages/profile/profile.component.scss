@@ -1,0 +1,30 @@
+h1, h2 {
+    text-align: center;
+}
+
+hr {
+    width: 95%;
+}
+
+.sub-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px;
+}
+
+.sub-card {
+    background-color: #F5F5F5;
+    color: #323232;
+}
+
+button {
+    background-color: #7763C5;
+    color: #FFFFFF;
+    padding: 0px 32px;
+}
+
+.subscribe {
+    display: flex;
+    justify-content: center;
+}

@@ -7,11 +7,13 @@ import com.openclassrooms.mddapi.models.Subject;
 import com.openclassrooms.mddapi.models.Subscription;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.payload.request.SubscriptionRequest;
+import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.SubjectRepository;
 import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class SubscriptionService {
     }
 
 
-    public String subscribe(SubscriptionRequest subscriptionRequest){
+    public ResponseEntity<MessageResponse> subscribe(SubscriptionRequest subscriptionRequest){
         Subject subject = subjectRepository.findById(Long.valueOf(subscriptionRequest.getSubject_id()))
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
 
@@ -62,10 +64,10 @@ public class SubscriptionService {
                 .build();
 
         subscriptionRepository.save(n);
-        return "Subscribe to " + subject.getName();
+        return ResponseEntity.ok(new MessageResponse("Subscribed to " + subject.getName()));
     }
 
-    public String unSubscribe(SubscriptionRequest subscriptionRequest){
+    public ResponseEntity<MessageResponse> unSubscribe(SubscriptionRequest subscriptionRequest){
         Subject subject = subjectRepository.findById(Long.valueOf(subscriptionRequest.getSubject_id()))
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
 
@@ -80,7 +82,7 @@ public class SubscriptionService {
 
         subscriptionRepository.delete(subscriptionOpt.get());
 
-        return "Unsubscribed from " + subject.getName();
+        return ResponseEntity.ok(new MessageResponse("Unsubscribed from " + subject.getName()));
     }
 
     public List<SubscriptionDTO> getSubscriptionListByUser(){

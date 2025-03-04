@@ -4,7 +4,7 @@
     <span>Trier par</span>
 </div>
 <div class="article-container">
-    <mat-card *ngFor="let article of (articles$ | async)" class="card" (click)="linkToDetail(article.id)">
+    <mat-card *ngFor="let article of (articles$ | async)" class="card" [routerLink]="['/detail', article.id]">
         <mat-card-header>
             <h2>{{article.title}}</h2>
             <div class="infos">

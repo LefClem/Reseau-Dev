@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.DTO.UserDTO;
 import com.openclassrooms.mddapi.DTO.TokenDTO;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.response.LoginResponse;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.services.JWTService;
@@ -62,15 +63,16 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public @ResponseBody ResponseEntity<TokenDTO> getToken(@RequestBody LoginRequest loginRequest){
+    public @ResponseBody ResponseEntity<LoginResponse> getToken(@RequestBody LoginRequest loginRequest){
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.email, loginRequest.password)
             );
 
             String token = jwtService.generateToken(authentication);
-            TokenDTO tokenDTO = new TokenDTO(token);
-            return ResponseEntity.ok(tokenDTO);
+            UserDTO userDTO = userService.getUserByEmail(loginRequest.email);
+
+            return ResponseEntity.ok(new LoginResponse(userDTO, token));
         } catch (AuthenticationException e) {
             System.err.println("Authentication failed: " + e.getMessage());
             throw new RuntimeException(e);

@@ -2,20 +2,23 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './pages/auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterComponent } from './pages/register/register.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FeedComponent } from './pages/feed/feed.component';
 import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
-import { DetailComponent } from './pages/detail/detail.component';
+import { SubjectComponent } from './pages/subject/subject.component';
+import { FeedComponent } from './pages/articles/feed/feed.component';
+import { DetailComponent } from './pages/articles/detail/detail.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, FeedComponent, DetailComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, FeedComponent, DetailComponent, SubjectComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,7 +26,8 @@ import { DetailComponent } from './pages/detail/detail.component';
     MatButtonModule,
     MatCardModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

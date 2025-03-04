@@ -22,4 +22,9 @@ export class AppComponent {
   ngOnDestroy(){
     this.subscription.unsubscribe();
   }
+
+  disconnect(){
+    localStorage.clear();
+    this.router.navigate(['/']);
+  }
 }

@@ -76,4 +76,17 @@ public class UserService {
         return userMapper.convertToDTO(user);
     }
 
+    public UserDTO getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(user.getId().intValue()   );
+                    userDTO.setUsername(user.getUsername());
+                    userDTO.setEmail(user.getEmail());
+                    return userDTO;
+                })
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    
+
 }
