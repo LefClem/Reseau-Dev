@@ -1,4 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Inter", "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", "Helvetica Neue", sans-serif;
+}
+
+.button-submit {
+    color: #FFFFFF;
+    margin: 16px auto;
+    background-color: #7763C5;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input {
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid #323232;
+}
+
+.mat-icon,
+svg:hover {
+    cursor: pointer;
+}
+
+.arrow-back {
+    margin: 10px;
+    width: 38px !important;
+}

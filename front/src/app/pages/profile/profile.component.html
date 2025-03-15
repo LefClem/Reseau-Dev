@@ -1,19 +1,36 @@
 <h1>Profil utilisateur</h1>
+<div class="center">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input type="text" id="username" formControlName="username" value="">
+        <input type="text" id="email" formControlName="email">
+        <input type="password" id="password" formControlName="password">
+        <button type="submit" mat-button [disabled]="form.invalid">Sauvegarder</button>
+            <span *ngIf="isError">Erreur: Mail not available!</span>
+    </form>
+</div>
+
+<div>{{ user | async }}</div>
 
 <hr>
 
 <h2>Abonnements</h2>
-<div class="sub-container">
-    <mat-card class="sub-card" *ngFor="let subscription of (subscriptions$ | async)">
-        <mat-card-header>
-            <mat-card-title>{{subscription.subject.name}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            {{subscription.subject.description}}
-        </mat-card-content>
-        <mat-card-actions class="subscribe">
-            <button mat-button (click)="unSubscribe(subscription.subject.id)">Se désabonner</button>
-            
-        </mat-card-actions>
-    </mat-card>
+
+<div class="sub-message" *ngIf="subscriptions.length === 0; else subscriptionList">
+  <span>Vous n'avez pas d'abonnement !</span>
 </div>
+
+<ng-template #subscriptionList>
+  <div class="sub-container">
+    <mat-card class="sub-card" *ngFor="let subscription of subscriptions">
+      <mat-card-header>
+        <mat-card-title>{{ subscription.subject.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{ subscription.subject.description }}
+      </mat-card-content>
+      <mat-card-actions class="subscribe">
+        <button mat-button (click)="unSubscribe(subscription.subject.id)">Se désabonner</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-template>

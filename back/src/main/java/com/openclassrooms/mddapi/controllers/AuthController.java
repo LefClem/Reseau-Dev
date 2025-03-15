@@ -39,22 +39,19 @@ public class AuthController {
     BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping(path = "/me")
-    public @ResponseBody ResponseEntity<UserDTO> getUser(){
+    public @ResponseBody ResponseEntity<UserDTO> getUser() {
         return ResponseEntity.ok(userService.getAuthUser());
     }
 
     @PutMapping(path = "/update")
-    public @ResponseBody String updateUser(
-            @RequestParam String username,
-            @RequestParam String email,
-            @RequestParam String password
-    ){
+    public @ResponseBody ResponseEntity<MessageResponse> updateUser(
+            @RequestBody RegisterRequest registerRequest) {
         Integer id = userService.getAuthUser().getId();
-        return userService.updateUser(username, email, password, id);
+        return userService.updateUser(registerRequest, id);
     }
 
     @PostMapping(path = "/register")
-    public @ResponseBody ResponseEntity<MessageResponse> register(@Valid  @RequestBody RegisterRequest registerRequest){
+    public @ResponseBody ResponseEntity<MessageResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
             return userService.createUser(registerRequest);
         } catch (Exception e) {
@@ -63,11 +60,10 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public @ResponseBody ResponseEntity<LoginResponse> getToken(@RequestBody LoginRequest loginRequest){
+    public @ResponseBody ResponseEntity<LoginResponse> getToken(@RequestBody LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.email, loginRequest.password)
-            );
+                    new UsernamePasswordAuthenticationToken(loginRequest.email, loginRequest.password));
 
             String token = jwtService.generateToken(authentication);
             UserDTO userDTO = userService.getUserByEmail(loginRequest.email);

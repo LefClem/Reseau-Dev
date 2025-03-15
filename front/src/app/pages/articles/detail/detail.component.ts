@@ -37,15 +37,16 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleServices.getArticleById(this.id)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(article => {
-      this.article = article;
-    });  }
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(article => {
+        this.article = article;
+      });
+  }
 
   onSubmit(articleId: number) {
     const formValue = this.form.get('content')?.value as string;
 
-    if (!formValue || formValue.trim().length < 10) return;
+    if (!formValue || formValue.trim().length < 5) return;
 
     this.commentaryServices.addComment({ id: articleId, content: formValue }).subscribe({
       next: (newComment) => {
@@ -62,7 +63,7 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }

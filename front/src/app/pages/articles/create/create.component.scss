@@ -1,0 +1,31 @@
+input {
+    border: 2px solid #7763C5;
+}
+
+select {
+    width: 258px;
+    height: 30px;
+    border-radius: 8px;
+    border: 2px solid #7763C5;
+}
+
+.content {
+    min-height: 200px;
+    text-align: start;
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    border: 2px solid #7763C5;
+    resize: none;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    letter-spacing: -0.5px;
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    padding: 8px 38px;
+}

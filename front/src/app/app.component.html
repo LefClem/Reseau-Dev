@@ -1,16 +1,47 @@
-<nav *ngIf="showNavBar">
-        <img src="/assets/logo_p6.png" alt="logo">
-        <ol>
-                <li routerLink="/feed">Articles</li>
-                <li routerLink="/subjects">Thèmes</li>
-                <li routerLink="/profile" class="profile">
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"/>
-                        </svg> -->
-                        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="circle-user"></mat-icon>
+<div *ngIf="!isMobile">
+        <nav *ngIf="showNavBar && !isMobile">
+                <img src="/assets/logo_p6.png" alt="logo">
+                <ol *ngIf="!isLoginPage">
+                        <li class="disconnect" (click)="disconnect()">Se déconnecter</li>
+                        <li routerLink="/feed">Articles</li>
+                        <li routerLink="/subjects">Thèmes</li>
+                        <li routerLink="/profile" class="profile" *ngIf="isProfilePage; else isNot">
+                                <mat-icon>person</mat-icon>
+                        </li>
+                        <ng-template #isNot>
+                                <li routerLink="/profile" class="profile-page">
+                                        <mat-icon>person</mat-icon>
+                                </li>
+                        </ng-template>
+                </ol>
+        </nav>
+        <router-outlet></router-outlet>
+</div>
 
-                </li>
-                <li (click)="disconnect()">Deconnexion</li>
-        </ol>
-</nav>
-<router-outlet></router-outlet>
+<mat-drawer-container *ngIf="isMobile" class="example-container">
+        <mat-drawer #drawer position="end">
+                <ol>
+                        <div class="direct-link">
+                                <li class="disconnect" (click)="disconnect(); drawer.close()">Se déconnecter</li>
+                                <li routerLink="/feed" (click)="drawer.close()">Articles</li>
+                                <li routerLink="/subjects" (click)="drawer.close()">Thèmes</li>
+                        </div>
+                        <li routerLink="/profile" class="profile" *ngIf="isProfilePage; else isNot"
+                                (click)="drawer.close()">
+                                <mat-icon>person</mat-icon>
+                        </li>
+                        <ng-template #isNot>
+                                <li routerLink="/profile" class="profile-page" (click)="drawer.close()">
+                                        <mat-icon>person</mat-icon>
+                                </li>
+                        </ng-template>
+                </ol>
+        </mat-drawer>
+        <mat-drawer-content>
+                <nav *ngIf="isMobile && showNavBar && !isLoginPage" class="mobile-nav">
+                        <img src="/assets/logo_p6.png" alt="logo">
+                        <mat-icon (click)="drawer.toggle()" class="burger-menu">menu</mat-icon>
+                </nav>
+                <router-outlet></router-outlet>
+        </mat-drawer-content>
+</mat-drawer-container>

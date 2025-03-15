@@ -1,0 +1,19 @@
+<mat-icon svgIcon="arrow-back" class="arrow-back" routerLink="/feed"></mat-icon>
+
+<h1>Créer un nouvel article</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <select formControlName="subject_id">
+        <option *ngFor="let subject of (subjectsList$ | async)" [value]="subject.id">
+            {{ subject.name }}
+        </option>
+    </select>
+
+    <input type="text" placeholder="Titre de l'article" formControlName="title">
+
+    <textarea class="content" type="text" placeholder="Contenu de l'article" formControlName="content"></textarea>
+
+    <button type="submit" class="button-submit" [disabled]="form.invalid">
+        Créer
+    </button>
+</form>

@@ -2,6 +2,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    padding: 16px;
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .subject-card {
@@ -13,6 +19,14 @@ button {
     background-color: #7763C5;
     color: #FFFFFF;
     padding: 0px 32px;
+}
+
+.disabled {
+    background-color: #939393;
+
+    &:hover {
+        cursor: auto;
+    }
 }
 
 .subscribe {

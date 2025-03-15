@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Subject } from "../interfaces/Subject.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ export class SubjectServices {
 
     constructor(private httpClient: HttpClient){}
 
-    public getSubjects(): Observable<any> {
-        return this.httpClient.get<any>(`${this.pathService}/`);
+    public getSubjects(): Observable<Subject[]> {
+        return this.httpClient.get<Subject[]>(`${this.pathService}/`);
     }
 }

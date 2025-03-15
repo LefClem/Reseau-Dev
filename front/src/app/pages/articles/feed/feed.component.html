@@ -1,7 +1,12 @@
 <div class="action-container">
-    <!-- {{ articles$ | async | json }} -->
-    <button>Créer un article</button>
-    <span>Trier par</span>
+    <button routerLink="/create">Créer un article</button>
+    <span (click)="sortByDate()">
+        Trier par
+        <mat-icon *ngIf="!isSorted; else sorted">arrow_upward</mat-icon>
+        <ng-template #sorted>
+            <mat-icon>arrow_downward</mat-icon>
+        </ng-template>
+    </span>
 </div>
 <div class="article-container">
     <mat-card *ngFor="let article of (articles$ | async)" class="card" [routerLink]="['/detail', article.id]">

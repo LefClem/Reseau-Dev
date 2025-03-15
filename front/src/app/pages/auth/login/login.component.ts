@@ -10,6 +10,7 @@ import { LoginRequest } from 'src/app/interfaces/LoginRequest.interface';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  public isMobile: boolean = window.innerWidth <= 768;
 
   public form = this.fb.group({
     email: [
@@ -37,7 +38,7 @@ export class LoginComponent {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: (value) => {
-        console.log(value.user);
+        console.log(value);
         localStorage.setItem("token", value.token);
         this.router.navigate(['/feed'])
       },

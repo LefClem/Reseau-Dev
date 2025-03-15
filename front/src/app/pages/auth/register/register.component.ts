@@ -11,6 +11,7 @@ import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
 })
 export class RegisterComponent {
 
+  public isMobile: boolean = window.innerWidth <= 768;
   public isError: boolean = false;
   public errorMessage!: string;
 

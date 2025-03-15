@@ -1,13 +1,16 @@
 <div class="subjects-container">
-    <mat-card class="subject-card" *ngFor="let subject of (subjects$ | async)">
+    <mat-card class="subject-card" *ngFor="let subject of updatedSubjects">
         <mat-card-header>
             <mat-card-title>{{ subject.name }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            {{ subject.description }}
+            Description: {{ subject.description }}
         </mat-card-content>
         <mat-card-actions class="subscribe" align="start">
-            <button mat-button (click)="subscribe(subject.id)">S'abonner</button>
+            <button mat-button *ngIf="!subject.isSub; else notSub" (click)="subscribe(subject.id)">S'abonner</button>
+            <ng-template #notSub>
+                <button mat-button class="disabled">Déjà abonné</button>
+            </ng-template>
         </mat-card-actions>
     </mat-card>
 </div>

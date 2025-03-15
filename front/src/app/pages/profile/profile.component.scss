@@ -6,16 +6,45 @@ hr {
     width: 95%;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }  
+
 .sub-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     padding: 16px;
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .sub-card {
     background-color: #F5F5F5;
     color: #323232;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    span {
+        text-align: center;
+    }
+}
+
+input {
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid #323232;
 }
 
 button {
@@ -27,4 +56,8 @@ button {
 .subscribe {
     display: flex;
     justify-content: center;
+}
+
+.sub-message {
+    text-align: center;
 }

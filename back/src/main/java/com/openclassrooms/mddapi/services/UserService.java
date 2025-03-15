@@ -28,8 +28,8 @@ public class UserService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    public ResponseEntity<MessageResponse> createUser(RegisterRequest registerRequest){
-        if(userRepository.existsByEmail(registerRequest.getEmail())){
+    public ResponseEntity<MessageResponse> createUser(RegisterRequest registerRequest) {
+        if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
         }
 
@@ -44,28 +44,25 @@ public class UserService {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
-    public String updateUser(
-            String username,
-            String email,
-            String password,
-            Integer id
-    ){
+    public ResponseEntity<MessageResponse> updateUser(
+            RegisterRequest registerRequest,
+            Integer id) {
         try {
             Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
             User user = userOptional.get();
 
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setPassword(passwordEncoder.encode(password));
+            user.setUsername(registerRequest.getUsername());
+            user.setEmail(registerRequest.getEmail());
+            user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
             userRepository.save(user);
-            return "ok";
+            return ResponseEntity.ok(new MessageResponse("User informations updated"));
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public UserDTO getAuthUser(){
+    public UserDTO getAuthUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = (Jwt) authentication.getPrincipal();
         User user = userRepository.findByEmail(jwt.getSubject())
@@ -80,13 +77,12 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .map(user -> {
                     UserDTO userDTO = new UserDTO();
-                    userDTO.setId(user.getId().intValue()   );
+                    userDTO.setId(user.getId().intValue());
                     userDTO.setUsername(user.getUsername());
                     userDTO.setEmail(user.getEmail());
                     return userDTO;
                 })
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
-    
 
 }

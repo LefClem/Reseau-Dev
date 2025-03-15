@@ -20,9 +20,7 @@ export class SubscriptionServices {
 
     public subscribe(id: number) {
         const body = { subject_id: id }; 
-    
-        console.log("Données envoyées :", body); 
-    
+        
         return this.httpClient.post<any>(`${this.pathService}/`, body, {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         });
@@ -36,7 +34,6 @@ export class SubscriptionServices {
 
         return this.httpClient.delete<any>(`${this.pathService}/`, httpOptions).pipe(
             tap(() => {
-              // Met à jour la liste des abonnements
               this.getSubscriptions();
             })
           );;

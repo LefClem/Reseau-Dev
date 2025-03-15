@@ -3,18 +3,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }  
-
-form {
-    display: flex;
-    flex-direction: column;
 }
 
-input {
-    width: 250px;
-    height: 30px;
-    border-radius: 8px;
-    border: 1px solid #323232;
+h1 {
+    text-align: center;
 }
 
 button {
@@ -28,12 +20,16 @@ button {
 
 nav {
     border-bottom: 1px solid #323232;
+
     img {
         width: 200px;
     }
 }
 
-img:last-child {
-    margin: 10px;
-    width: 39px;
+svg {
+    padding: 10px;
+}
+
+img {
+    width: 225px;
 }

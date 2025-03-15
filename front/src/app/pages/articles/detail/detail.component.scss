@@ -1,85 +1,107 @@
-.card {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 16px 63px;
-}
+ .card {
+     display: flex;
+     flex-direction: column;
+     gap: 24px;
+     padding: 16px 63px;
+ }
 
-.card-header {
-    display: flex;
-    gap: 16px;
-    padding: 8px;
-}
+ .card-header {
+     display: flex;
+     gap: 16px;
+     padding: 8px;
+ }
 
-.infos {
-    display: flex;
-    gap: 48px;
-}
+ .infos {
+     display: flex;
+     gap: 48px;
+ }
 
-.comment-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 16px;
-    margin-left: 80px;
+ .comment-container {
+     display: flex;
+     flex-direction: column;
+     gap: 16px;
+     margin-top: 16px;
+     margin-left: 80px;
 
-    @media (max-width: 768px){
-        margin: 0;
-    }
-}
+     @media (max-width: 768px) {
+         margin: 0;
+     }
+ }
 
-.comment-card {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-    
-    span {
-        padding: 8px;
-    }
-    
-    .comment-content {
-        border-radius: 8px;
-        background-color: #EEEEEE;
-        width: 50%;
-        min-height: 36px;
-        padding: 8px;
-    }
+ .comment-card {
+     display: flex;
+     flex-direction: row;
+     gap: 24px;
 
-    @media (max-width: 768px){
-        flex-direction: column-reverse;
-        span {
-            margin-left: auto;
-        }
-    }
-}
+     span {
+         padding: 8px;
+     }
 
-form {
-    display: flex;
-    justify-content: center;
-    margin-top: 32px;
+     .comment-content {
+         border-radius: 8px;
+         background-color: #EEEEEE;
+         width: 50%;
+         min-height: 36px;
+         padding: 8px;
 
-    input {
-        width: 50%;
-        height: 80px;
-        border-radius: 8px;
-        border: 1px solid #000000;
-    }
+         @media (max-width: 768px) {
+             width: 95%;
+         }
+     }
 
-    button {
-        border: none;
-        background-color: transparent;
-    }
-}
+     @media (max-width: 768px) {
+         flex-direction: column-reverse;
+         margin-left: 10px;
+         margin-right: 10px;
 
-h1 {
-    margin: 0;
-    font-size: 24px;
-}
+         span {
+             margin-left: auto;
+         }
+     }
+ }
 
-h2 {
-    margin: 0 63px;
-}
+ .form-detail {
+     margin-top: 32px;
+     padding-bottom: 32px;
+     flex-direction: row;
 
-img {
-    width: 39px;
-}
+     input {
+         width: 50%;
+         height: 80px;
+         border-radius: 8px;
+         border: 1px solid #000000;
+
+         @media (max-width: 768px) {
+             width: 85%;
+         }
+     }
+
+     button {
+         border: none;
+         background-color: transparent;
+     }
+
+ }
+
+ h1 {
+     margin: 0;
+     font-size: 24px;
+     align-self: center;
+ }
+
+ h2 {
+     margin: 0 63px;
+
+     @media (max-width: 768px) {
+         margin: 16px 8px;
+     }
+ }
+
+ svg:hover {
+     cursor: pointer;
+ }
+
+ .mat-icon {
+     width: 43px;
+     height: auto;
+ }

@@ -40,7 +40,6 @@ public class ArticleService {
     }
 
     public Articles createArticle(ArticleRequest articleRequest){
-        System.out.println(articleRequest);
         Subject subject = subjectRepository.findById(Long.valueOf(articleRequest.getSubject_id()))
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
         User user = userRepository.findById(Long.valueOf(getAuthenticatedUser().getId()))

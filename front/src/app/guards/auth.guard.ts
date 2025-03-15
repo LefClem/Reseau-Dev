@@ -7,9 +7,8 @@ import { AuthServices } from "../services/auth.services";
 })
 export class AuthGuard implements CanActivate{
     constructor(
-        private router: Router,
-        // private authServices: AuthServices
-        ){}
+        private router: Router
+    ){}
         
     public canActivate(): boolean {
         const token = localStorage.getItem("token");
