@@ -44,7 +44,6 @@ export class CreateComponent {
       ...this.form.value,
       subject_id: Number(this.form.value.subject_id)
     } as ArticleRequest;
-    console.log(articleRequest);
 
     this.articleServices.createArticle(articleRequest).subscribe({
       next: value => this.router.navigate(['/feed']),

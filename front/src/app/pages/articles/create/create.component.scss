@@ -28,4 +28,7 @@ h1 {
 
 button {
     padding: 8px 38px;
+    &:disabled {
+        opacity: .5;
+    }
 }

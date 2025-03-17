@@ -10,4 +10,5 @@
         <input type="password" formControlName="password" id="password">
         <button type="submit" class="button-submit">Se connecter</button>
     </form>
+    <span *ngIf="isError">Bad credentials</span>
 </div>

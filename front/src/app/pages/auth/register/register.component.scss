@@ -16,6 +16,12 @@ button {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
+    &:hover {
+        cursor: pointer;
+    }
+    &:disabled {
+        opacity: .5;
+    }
 }
 
 nav {
@@ -32,4 +38,8 @@ svg {
 
 img {
     width: 225px;
+}
+
+span {
+    color: red;
 }

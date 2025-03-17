@@ -12,6 +12,7 @@ import { CommentaryServices } from 'src/app/services/commentary.services';
 })
 export class DetailComponent implements OnInit {
   private destroy$ = new Subject<void>();
+  public isError: boolean = false;
 
   constructor(
     private articleServices: ArticlesServices,
@@ -46,7 +47,12 @@ export class DetailComponent implements OnInit {
   onSubmit(articleId: number) {
     const formValue = this.form.get('content')?.value as string;
 
-    if (!formValue || formValue.trim().length < 5) return;
+    if (!formValue || formValue.trim().length < 5) {
+      this.isError = true;
+      console.log(this.isError);
+      return;
+    }
+    
 
     this.commentaryServices.addComment({ id: articleId, content: formValue }).subscribe({
       next: (newComment) => {

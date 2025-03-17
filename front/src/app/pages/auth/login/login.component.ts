@@ -11,6 +11,7 @@ import { LoginRequest } from 'src/app/interfaces/LoginRequest.interface';
 })
 export class LoginComponent {
   public isMobile: boolean = window.innerWidth <= 768;
+  public isError: boolean = false;
 
   public form = this.fb.group({
     email: [
@@ -44,6 +45,7 @@ export class LoginComponent {
       },
       error: error => {
         console.log(error);
+        this.isError = true;
       }
     })
   }
