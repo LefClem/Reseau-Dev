@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <input type="text" id="username" formControlName="username" value="">
         <input type="text" id="email" formControlName="email">
-        <input type="password" id="password" formControlName="password">
+        <input type="password" id="password" formControlName="password" placeholder="Mot de passe">
         <button type="submit" mat-button [disabled]="form.invalid">Sauvegarder</button>
             <span *ngIf="isError">Erreur: Mail not available!</span>
     </form>
