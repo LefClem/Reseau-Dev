@@ -22,4 +22,16 @@ This library is `@angular/material`, it's one of the most famous in the angular 
 
 Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
 
+## Database
+
+You need to create a local database with the name `reseau_dev`.
+
+If you want to personalize the name of the database, you only need update the name in the application.properties file in the spring.datasource.url.
+
+## Back
+
+First, run `mvn clean install` to install all the dependencies.
+
+Run `mvn springboot:run` to launch the server.
+
 Good luck!
