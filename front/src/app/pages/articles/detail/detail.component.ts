@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { Article } from 'src/app/interfaces/Article.interface';
 import { ArticlesServices } from 'src/app/services/article.services';
 import { CommentaryServices } from 'src/app/services/commentary.services';
 
@@ -34,7 +35,7 @@ export class DetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   id = this.route.snapshot.params['id'];
 
-  public article: any;
+  public article!: Article;
 
   ngOnInit(): void {
     this.articleServices.getArticleById(this.id)
@@ -60,7 +61,6 @@ export class DetailComponent implements OnInit {
 
         // Met à jour localement sans recharger depuis l’API
         this.article.commentaries.push(newComment);
-        this.articleServices.updateArticle(this.article);
 
         // Réinitialise le formulaire
         this.form.reset();

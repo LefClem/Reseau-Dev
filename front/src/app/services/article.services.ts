@@ -9,7 +9,6 @@ import { Article } from "../interfaces/Article.interface";
 })
 export class ArticlesServices {
     private pathService = 'http://localhost:8080/api/article';
-    private article = new BehaviorSubject<any>(null); // Stocke l’article actuel
 
     constructor(private httpClient: HttpClient) { };
 
@@ -18,17 +17,10 @@ export class ArticlesServices {
     }
 
     public getArticleById(id: number): Observable<Article> {
-        this.httpClient.get<Article>(`${this.pathService}/${id}`).subscribe(article => {
-            this.article.next(article);
-        });
-        return this.article.asObservable();
+        return this.httpClient.get<Article>(`${this.pathService}/${id}`)
     }
 
     public createArticle(articleRequest: ArticleRequest): Observable<Article> {
         return this.httpClient.post<Article>(`${this.pathService}/create`, articleRequest);
-    }
-
-    public updateArticle(article: Article) {
-        this.article.next(article); // Met à jour sans recharger l’API
     }
 }
