@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.DTO.UserDTO;
-import com.openclassrooms.mddapi.DTO.TokenDTO;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.payload.response.LoginResponse;

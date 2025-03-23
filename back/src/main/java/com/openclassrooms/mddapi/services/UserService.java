@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +49,14 @@ public class UserService {
             RegisterRequest registerRequest,
             Integer id) {
         try {
+            if (userRepository.existsByEmail(registerRequest.getEmail())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
+            }
+
             Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
+            if (!userOptional.isPresent()) {
+                return ResponseEntity.notFound().build(); // Si l'utilisateur n'existe pas
+            }
             User user = userOptional.get();
 
             user.setUsername(registerRequest.getUsername());
@@ -56,9 +64,11 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
             userRepository.save(user);
-            return ResponseEntity.ok(new MessageResponse("User informations updated"));
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+
+            return ResponseEntity.ok(new MessageResponse("User information updated"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
         }
     }
 

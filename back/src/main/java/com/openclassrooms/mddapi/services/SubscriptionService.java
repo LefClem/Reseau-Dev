@@ -40,12 +40,11 @@ public class SubscriptionService {
     @Autowired
     ModelMapper modelMapper;
 
-    private UserDTO getAuthenticatedUser(){
+    private UserDTO getAuthenticatedUser() {
         return userService.getAuthUser();
     }
 
-
-    public ResponseEntity<MessageResponse> subscribe(SubscriptionRequest subscriptionRequest){
+    public ResponseEntity<MessageResponse> subscribe(SubscriptionRequest subscriptionRequest) {
         Subject subject = subjectRepository.findById(Long.valueOf(subscriptionRequest.getSubject_id()))
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
 
@@ -55,7 +54,8 @@ public class SubscriptionService {
         Optional<Subscription> subscriptionOpt = subscriptionRepository.findByUserAndSubject(user, subject);
         System.out.println(subscriptionOpt);
         if (subscriptionOpt.isPresent()) {
-            throw new RuntimeException("You already subscribe to this subject");
+            return ResponseEntity.badRequest().body(new MessageResponse("You already subscribe to this subject"));
+            // throw new RuntimeException("You already subscribe to this subject");
         }
 
         Subscription n = Subscription.builder()
@@ -67,7 +67,7 @@ public class SubscriptionService {
         return ResponseEntity.ok(new MessageResponse("Subscribed to " + subject.getName()));
     }
 
-    public ResponseEntity<MessageResponse> unSubscribe(SubscriptionRequest subscriptionRequest){
+    public ResponseEntity<MessageResponse> unSubscribe(SubscriptionRequest subscriptionRequest) {
         Subject subject = subjectRepository.findById(Long.valueOf(subscriptionRequest.getSubject_id()))
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
 
@@ -77,7 +77,7 @@ public class SubscriptionService {
         Optional<Subscription> subscriptionOpt = subscriptionRepository.findByUserAndSubject(user, subject);
         System.out.println(subscriptionOpt);
         if (subscriptionOpt.isEmpty()) {
-            throw new RuntimeException("Subscription not found");
+            return ResponseEntity.badRequest().body(new MessageResponse("Subscription not found"));
         }
 
         subscriptionRepository.delete(subscriptionOpt.get());
@@ -85,13 +85,13 @@ public class SubscriptionService {
         return ResponseEntity.ok(new MessageResponse("Unsubscribed from " + subject.getName()));
     }
 
-    public List<SubscriptionDTO> getSubscriptionListByUser(){
+    public List<SubscriptionDTO> getSubscriptionListByUser() {
         User user = userRepository.findById(Long.valueOf(getAuthenticatedUser().getId()))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Iterable<Subscription> subscriptions = subscriptionRepository.findByUser(user);
         List<SubscriptionDTO> subscriptionDtos = new ArrayList<>();
-        for(Subscription subscription: subscriptions){
+        for (Subscription subscription : subscriptions) {
             SubscriptionDTO subscriptionDto = subscriptionMapper.toDto(subscription);
             subscriptionDtos.add(subscriptionDto);
         }

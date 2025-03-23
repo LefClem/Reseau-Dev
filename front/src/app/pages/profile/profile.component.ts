@@ -88,7 +88,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       },
       error: error => {
         this.isError = true;
-        this.errorMessage = error.message
+        this.errorMessage = error.error.message
+        console.log(error);
+        
       }
     })
   }
