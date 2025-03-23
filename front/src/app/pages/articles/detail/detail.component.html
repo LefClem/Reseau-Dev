@@ -25,11 +25,11 @@
         </div>
     </div>
 
+    <div *ngIf="isError" class="error">Votre commentaire doit contenir minimum 5 caractères</div>
     <form [formGroup]="form" (ngSubmit)="onSubmit(article.id)" class="form-detail">
         <input type="text" formControlName="content" placeholder="Écrivez votre commentaire ici">
         <button type="submit">
             <mat-icon svgIcon="send"></mat-icon>
         </button>
     </form>
-    <div *ngIf="isError" class="error">Votre commentaire doit contenir minimum 5 caractères</div>
 </div>

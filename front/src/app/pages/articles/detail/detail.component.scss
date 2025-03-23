@@ -61,7 +61,7 @@
  }
 
  .form-detail {
-     margin-top: 32px;
+     margin-top: 22px;
      padding-bottom: 32px;
      flex-direction: row;
 
@@ -106,7 +106,8 @@
      height: auto;
  }
 
-.error {
-    color: red;
-    text-align: center;
+ .error {
+     color: red;
+     text-align: center;
+     padding-top: 10px;
  }

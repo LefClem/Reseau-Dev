@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
 import { AuthServices } from 'src/app/services/auth.services';
 import { SubscriptionServices } from 'src/app/services/subscription.services';
@@ -14,7 +14,7 @@ import { SubscriptionServices } from 'src/app/services/subscription.services';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   public subscriptions: any[] = [];
-  private subscription!: Subscription;
+  private destroy$ = new Subject<void>();
   public isError: boolean = false;
   public errorMessage!: string;
   public user!: any;
@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.subscriptionService.getSubscriptions().subscribe({
+    this.subscriptionService.getSubscriptions().subscribe({
       next: (data) => this.subscriptions = data,
       error: (err) => console.error("Erreur lors de la récupération des abonnements :", err)
     });
@@ -95,9 +95,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
