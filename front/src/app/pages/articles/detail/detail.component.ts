@@ -67,6 +67,7 @@ export class DetailComponent implements OnInit {
       },
       error: (err) => console.error("Erreur backend :", err)
     });
+    this.isError = false;
   }
 
   ngOnDestroy() {
