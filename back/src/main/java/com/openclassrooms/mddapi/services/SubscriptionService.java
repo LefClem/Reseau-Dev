@@ -52,7 +52,6 @@ public class SubscriptionService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Optional<Subscription> subscriptionOpt = subscriptionRepository.findByUserAndSubject(user, subject);
-        System.out.println(subscriptionOpt);
         if (subscriptionOpt.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("You already subscribe to this subject"));
             // throw new RuntimeException("You already subscribe to this subject");
@@ -75,7 +74,6 @@ public class SubscriptionService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Optional<Subscription> subscriptionOpt = subscriptionRepository.findByUserAndSubject(user, subject);
-        System.out.println(subscriptionOpt);
         if (subscriptionOpt.isEmpty()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Subscription not found"));
         }

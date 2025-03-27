@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthServices } from 'src/app/services/auth.services';
 import { LoginRequest } from 'src/app/interfaces/LoginRequest.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { LoginRequest } from 'src/app/interfaces/LoginRequest.interface';
 export class LoginComponent {
   public isMobile: boolean = window.innerWidth <= 768;
   public isError: boolean = false;
+  private loginSubscription!: Subscription;
 
   public form = this.fb.group({
     email: [
@@ -37,17 +39,21 @@ export class LoginComponent {
 
   onSubmit(){
     const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe({
+    this.loginSubscription = this.authService.login(loginRequest).subscribe({
       next: (value) => {
-        console.log(value);
         localStorage.setItem("token", value.token);
         this.router.navigate(['/feed'])
       },
       error: error => {
-        console.log(error);
         this.isError = true;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
   }
 
 }

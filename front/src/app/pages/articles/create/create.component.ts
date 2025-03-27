@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ArticleRequest } from 'src/app/interfaces/ArticleRequest.interface';
 import { ArticlesServices } from 'src/app/services/article.services';
 import { SubjectServices } from 'src/app/services/subject.services';
@@ -10,8 +11,9 @@ import { SubjectServices } from 'src/app/services/subject.services';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent {
+export class CreateComponent implements OnDestroy {
   public subjectsList$ = this.subjectService.getSubjects();
+  private createSubscription!: Subscription;
 
   public form = this.fb.group({
     subject_id: [
@@ -39,16 +41,22 @@ export class CreateComponent {
     private router: Router
   ) { }
 
-  onSubmit() {
+  onSubmit(): void {
     const articleRequest = {
       ...this.form.value,
       subject_id: Number(this.form.value.subject_id)
     } as ArticleRequest;
 
-    this.articleServices.createArticle(articleRequest).subscribe({
+    this.createSubscription = this.articleServices.createArticle(articleRequest).subscribe({
       next: value => this.router.navigate(['/feed']),
-      error: error => console.log(error)
+      error: error => {}
     })
+  }
+
+  ngOnDestroy(): void {
+      if(this.createSubscription){
+        this.createSubscription.unsubscribe();
+      }
   }
 
 }

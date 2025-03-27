@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
 import { AuthServices } from 'src/app/services/auth.services';
 import { SubscriptionServices } from 'src/app/services/subscription.services';
@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptionService.getSubscriptions().subscribe({
       next: (data) => this.subscriptions = data,
-      error: (err) => console.error("Erreur lors de la récupération des abonnements :", err)
+      error: (error) => {return error}
     });
 
     this.authService.getAuthUser().subscribe({
@@ -66,36 +66,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
         });
 
       },
-      error: error => console.error("Erreur: ", error)
+      error: error => {return error}
     });
   }
 
   unSubscribe(id: number): void {
     this.subscriptionService.unSubscribe(id).subscribe({
-      next: () => console.log("Désabonnement réussi"),
-      error: (err) => console.error("Erreur de désabonnement :", err)
+      next: () => {},
+      error: (err) => {return err}
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const updateRequest = this.form.value as RegisterRequest;
-    console.log(updateRequest);
     this.authService.updateUser(updateRequest).subscribe({
-      next: (value) => {
-        console.log('Modification réussie', value);
+      next: () => {
         localStorage.clear();
         this.router.navigate(['/login']);
       },
       error: error => {
         this.isError = true;
-        this.errorMessage = error.error.message;
-        console.log(error);
-        
+        this.errorMessage = error.error.message;        
       }
     })
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

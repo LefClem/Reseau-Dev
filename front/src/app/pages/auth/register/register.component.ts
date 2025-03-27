@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthServices } from 'src/app/services/auth.services';
 import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 
   public isMobile: boolean = window.innerWidth <= 768;
   public isError: boolean = false;
   public errorMessage!: string;
-
+  private registerSubscription!: Subscription;
+  
   public form = this.fb.group({
     username: [
       '', 
@@ -45,19 +47,23 @@ export class RegisterComponent {
     private router: Router
     ) { }
 
-  onSubmit(){
+  onSubmit(): void {
     const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe({
-      next: (value) => {
-        console.log("Inscription réussie :", value);
+    this.registerSubscription = this.authService.register(registerRequest).subscribe({
+      next: () => {
         this.router.navigate(['/login']);
       },
       error: error => {
-        console.log(error);
         this.isError = true;
         this.errorMessage = error.error.message;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+      if(this.registerSubscription){
+        this.registerSubscription.unsubscribe();
+      }
   }
 
 }

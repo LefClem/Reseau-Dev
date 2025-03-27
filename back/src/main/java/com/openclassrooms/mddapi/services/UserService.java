@@ -76,8 +76,6 @@ public class UserService {
         User user = userRepository.findByEmail(jwt.getSubject())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         ;
-        System.out.println(user);
-
         return userMapper.convertToDTO(user);
     }
 

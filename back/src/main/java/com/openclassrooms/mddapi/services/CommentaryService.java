@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class CommentaryService {
@@ -27,11 +26,11 @@ public class CommentaryService {
     @Autowired
     ArticleRepository articleRepository;
 
-    private UserDTO getAuthenticatedUser(){
+    private UserDTO getAuthenticatedUser() {
         return userService.getAuthUser();
     }
 
-    public Commentary addCommentary(String content, Integer id){
+    public Commentary addCommentary(String content, Integer id) {
         Articles article = articleRepository.findById(Long.valueOf(id))
                 .orElseThrow(() -> new RuntimeException("Article not found"));
 

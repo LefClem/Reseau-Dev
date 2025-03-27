@@ -5,7 +5,6 @@ import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.payload.response.LoginResponse;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
-import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.services.JWTService;
 import com.openclassrooms.mddapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "/api/auth")
 public class AuthController {
-    @Autowired
-    UserRepository userRepository;
-
     @Autowired
     UserService userService;
 
@@ -69,7 +65,6 @@ public class AuthController {
 
             return ResponseEntity.ok(new LoginResponse(userDTO, token));
         } catch (AuthenticationException e) {
-            System.err.println("Authentication failed: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

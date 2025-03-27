@@ -22,25 +22,24 @@ export class AppComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.checkScreenSize();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize() {
+  onResize(): void {
     this.checkScreenSize();
   }
 
-  private checkScreenSize() {
+  private checkScreenSize(): void {
     this.isMobile = window.innerWidth <= 768;
   }
-  
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  disconnect() {
+  disconnect(): void {
     localStorage.clear();
     this.router.navigate(['/']);
   }

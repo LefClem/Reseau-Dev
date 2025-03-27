@@ -1,15 +1,11 @@
 package com.openclassrooms.mddapi.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import com.openclassrooms.mddapi.validators.ValidPassword;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "USERS", uniqueConstraints = {

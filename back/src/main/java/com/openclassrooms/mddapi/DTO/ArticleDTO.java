@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.DTO;
 
-import com.openclassrooms.mddapi.models.Commentary;
 import com.openclassrooms.mddapi.models.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

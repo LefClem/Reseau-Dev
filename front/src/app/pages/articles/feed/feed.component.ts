@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Article } from 'src/app/interfaces/Article.interface';
 import { ArticlesServices } from 'src/app/services/article.services';
 
@@ -8,7 +8,7 @@ import { ArticlesServices } from 'src/app/services/article.services';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnDestroy {
   constructor(private articleServices: ArticlesServices) { }
 
   private articlesSubject = new BehaviorSubject<Article[]>([]);
@@ -16,12 +16,14 @@ export class FeedComponent implements OnInit {
   public user = localStorage.getItem("token");
   public isSorted: boolean = false; // false = tri décroissant par défaut
 
+  private articlesSubscription!: Subscription;
+
 
   ngOnInit(): void {
     this.loadArticles();
   }
 
-  loadArticles() {
+  loadArticles(): void {
     this.articleServices.getArticles().subscribe({
       next: articles => {        
         // Charger les articles triés par défaut (du plus récent au plus ancien)
@@ -30,11 +32,11 @@ export class FeedComponent implements OnInit {
         );
         this.articlesSubject.next(sortedArticles);
       },
-      error: err => console.error(err)
+      error: error => {return error}
     });
   }
 
-  sortByDate() {
+  sortByDate(): void{
     this.isSorted = !this.isSorted;
 
     const sortedArticles = [...this.articlesSubject.value].sort((a, b) =>
@@ -44,5 +46,12 @@ export class FeedComponent implements OnInit {
     )
     this.articlesSubject.next(sortedArticles);
   }
+
+  ngOnDestroy(): void {
+    if (this.articlesSubscription) {
+      this.articlesSubscription.unsubscribe();
+    }
+  }
+
 }
 

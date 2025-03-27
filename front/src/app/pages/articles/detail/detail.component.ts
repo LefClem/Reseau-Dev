@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,7 +11,7 @@ import { CommentaryServices } from 'src/app/services/commentary.services';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public isError: boolean = false;
 
@@ -45,19 +45,16 @@ export class DetailComponent implements OnInit {
       });
   }
 
-  onSubmit(articleId: number) {
+  onSubmit(articleId: number): void {
     const formValue = this.form.get('content')?.value as string;
 
     if (!formValue || formValue.trim().length < 5) {
       this.isError = true;
-      console.log(this.isError);
       return;
     }
-    
 
     this.commentaryServices.addComment({ id: articleId, content: formValue }).subscribe({
       next: (newComment) => {
-        console.log("Commentaire ajouté :", newComment);
 
         // Met à jour localement sans recharger depuis l’API
         this.article.commentaries.push(newComment);
@@ -65,12 +62,12 @@ export class DetailComponent implements OnInit {
         // Réinitialise le formulaire
         this.form.reset();
       },
-      error: (err) => console.error("Erreur backend :", err)
+      error: (error) => {return error}
     });
     this.isError = false;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
