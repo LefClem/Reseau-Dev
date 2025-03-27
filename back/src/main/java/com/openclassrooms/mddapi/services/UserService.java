@@ -49,15 +49,13 @@ public class UserService {
             RegisterRequest registerRequest,
             Integer id) {
         try {
-            if (userRepository.existsByEmail(registerRequest.getEmail())) {
+            Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
+            User user = userOptional.get();
+
+            Optional<User> existingUser = userRepository.findByEmail(registerRequest.getEmail());
+            if (existingUser.isPresent() && !existingUser.get().getId().equals(user.getId())) {
                 return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
             }
-
-            Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
-            if (!userOptional.isPresent()) {
-                return ResponseEntity.notFound().build(); // Si l'utilisateur n'existe pas
-            }
-            User user = userOptional.get();
 
             user.setUsername(registerRequest.getUsername());
             user.setEmail(registerRequest.getEmail());
