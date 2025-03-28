@@ -30,6 +30,8 @@ If you want to personalize the name of the database, you only need update the na
 
 ## Back
 
+Create a .env file at the root of the folder and insert the values included in the application.properties file.
+
 First, run `mvn clean install` to install all the dependencies.
 
 Run `mvn springboot:run` to launch the server.
